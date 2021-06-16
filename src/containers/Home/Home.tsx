@@ -1,15 +1,15 @@
 import Head from 'next/head'
-import styles from './Home.module.css'
+import { Container, Main, Header, Footer } from './home.style'
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <Container>
       <Head>
         <title>Sunken.me</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className={styles.header}>
+      <Header>
         <div>头部</div>
         <nav>
           <ul>
@@ -20,15 +20,15 @@ export default function Home() {
             <li>关于</li>
           </ul>
         </nav>
-      </header>
+      </Header>
 
-      <main className={styles.main} />
+      <Main />
 
-      <footer className={styles.footer}>
+      <Footer>
         <span>design by sunken, all rights reserved</span>
         {/* <a href="#">关于我</a>
         <a href="#">作品展示</a> */}
-      </footer>
-    </div>
+      </Footer>
+    </Container>
   )
 }
