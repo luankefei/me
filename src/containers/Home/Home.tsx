@@ -7,7 +7,9 @@ import {
   Nav,
   Logo,
   Slogan,
-  Carousel
+  Carousel,
+  RecommendAside,
+  Waterfall
 } from './home.style'
 
 export default function Home() {
@@ -38,7 +40,21 @@ export default function Home() {
       </Header>
 
       <Main>
-        <Carousel />
+        <div className="top">
+          <Carousel />
+          <RecommendAside />
+        </div>
+        <div className="bottom">
+          <Waterfall />
+          <Waterfall />
+          <Waterfall />
+          <Waterfall />
+          <Waterfall />
+          <Waterfall />
+          <Waterfall />
+          <Waterfall />
+          <Waterfall />
+        </div>
       </Main>
 
       <Footer>

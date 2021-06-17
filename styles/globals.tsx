@@ -9,6 +9,7 @@ export const globalStyles = (
         width: 100%;
         line-height: 1;
         -webkit-overflow-scrolling: touch;
+        margin: 0;
       }
 
       body {

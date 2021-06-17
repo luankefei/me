@@ -54,13 +54,20 @@ export const Main = styled.div`
   // flex-direction: column;
   // justify-content: center;
   // align-items: center;
-`
 
-export const Carousel = styled.div`
-  background: #f5f5f5;
-  width: 700px;
-  height: 300px;
-  margin: 30px;
+  > .top {
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    background: #f5f5f5;
+  }
+
+  > .bottom {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 30px;
+  }
 `
 
 export const Footer = styled.div`
@@ -87,4 +94,24 @@ export const Footer = styled.div`
   > a:last-child {
     padding-right: 0;
   }
+`
+
+export const Carousel = styled.div`
+  background: #ccc;
+  height: 400px;
+  margin-right: 30px;
+  flex: 1;
+`
+
+export const RecommendAside = styled.aside`
+  width: 360px;
+  height: 400px;
+  background: #ccc;
+`
+
+export const Waterfall = styled.div`
+  width: 252px;
+  height: 516px;
+  background: #f5f5f5;
+  margin: 10px;
 `
