@@ -1,5 +1,14 @@
 import Head from 'next/head'
-import { Container, Main, Header, Footer } from './home.style'
+import {
+  Container,
+  Main,
+  Header,
+  Footer,
+  Nav,
+  Logo,
+  Slogan,
+  Carousel
+} from './home.style'
 
 export default function Home() {
   return (
@@ -10,24 +19,32 @@ export default function Home() {
       </Head>
 
       <Header>
-        <div>头部</div>
-        <nav>
+        <div>
+          <Logo>
+            <img src="/static/images/logo.png" alt="sunken.me" />
+          </Logo>
+          <Slogan>想法、层次、评论、戏剧性、流言</Slogan>
+        </div>
+        <Nav>
           <ul>
             <li>首页</li>
-            <li>厨艺</li>
+            <li>菜谱</li>
+            <li>点评</li>
             <li>跑步</li>
             <li>技术</li>
             <li>关于</li>
           </ul>
-        </nav>
+        </Nav>
       </Header>
 
-      <Main />
+      <Main>
+        <Carousel />
+      </Main>
 
       <Footer>
         <span>design by sunken, all rights reserved</span>
-        {/* <a href="#">关于我</a>
-        <a href="#">作品展示</a> */}
+        <a href="/about">关于我</a>
+        <a href="https://github.com/luankefei">作品展示</a>
       </Footer>
     </Container>
   )
