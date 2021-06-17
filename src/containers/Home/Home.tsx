@@ -49,11 +49,6 @@ export default function Home() {
           <Waterfall />
           <Waterfall />
           <Waterfall />
-          <Waterfall />
-          <Waterfall />
-          <Waterfall />
-          <Waterfall />
-          <Waterfall />
         </div>
       </Main>
 

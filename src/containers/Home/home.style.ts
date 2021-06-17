@@ -110,7 +110,7 @@ export const RecommendAside = styled.aside`
 `
 
 export const Waterfall = styled.div`
-  width: 252px;
+  width: 352px;
   height: 516px;
   background: #f5f5f5;
   margin: 10px;
