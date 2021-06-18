@@ -1,4 +1,6 @@
 import Head from 'next/head'
+import Calendar from '../../components/Calendar/Calendar'
+
 import {
   Container,
   Main,
@@ -51,6 +53,8 @@ export default function Home() {
           <Waterfall />
         </div>
       </Main>
+
+      <Calendar />
 
       <Footer>
         <span>design by sunken, all rights reserved</span>
