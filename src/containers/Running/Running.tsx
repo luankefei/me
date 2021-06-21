@@ -7,7 +7,7 @@ const Running = () => {
   return (
     <div>
       <Head>
-        <title>Sunken.me</title>
+        <title>跑步 - Sunken.me</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
     </div>
