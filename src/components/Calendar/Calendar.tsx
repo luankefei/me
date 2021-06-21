@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 
 /* eslint-disable-next-line @typescript-eslint/naming-convention */
-// declare let _: any
 
 const Calendar = () => {
   useEffect(() => {

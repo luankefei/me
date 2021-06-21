@@ -4,6 +4,8 @@ const Container = styled.div`
   border: 1px solid red;
 `
 
-export default {
-  Container
-}
+const Summary = styled.div`
+  border: 1px solid blue;
+`
+
+export { Container, Summary }
