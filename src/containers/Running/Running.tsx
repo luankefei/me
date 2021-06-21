@@ -88,7 +88,7 @@ const Running = () => {
       {
         type: 'list',
         content:
-          'Transition 3w 以不超过60min的easy run为主，训练后可增加6-10组 10s 短上坡冲刺（练腿部力量和核心力量的黄金时间\nBase 4w 以easy run为主，逐渐增加跑量。加入30s - 2min 的 Fartlek 质量跑。长距离跑以 60-120min 为主，训练结束后可增加长上坡训练\nFundamental 8w 加入乳酸阈值跑，LSD 和间歇。在周中加入速度课后紧跟着第二天的长距离跑\nMarathon-Specific 5w 马拉松配速节奏跑，LSD'
+          'Transition 3w 以不超过 60min 的 easy run 为主，训练后可增加6-10组 10s 短上坡冲刺（练腿部力量和核心力量的黄金时间\nBase 4w 以 easy run 为主，逐渐增加跑量。加入30s - 2min 的 Fartlek 质量跑。长距离跑以 60-120min 为主，训练结束后可增加长上坡训练\nFundamental 8w 加入乳酸阈值跑，LSD 和间歇。在周中加入速度课后紧跟着第二天的长距离跑\nMarathon-Specific 5w 马拉松配速节奏跑，LSD'
       },
       {
         type: 'content',
