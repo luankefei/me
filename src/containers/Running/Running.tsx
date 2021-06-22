@@ -1,52 +1,9 @@
-import { useEffect } from 'react'
 import Head from 'next/head'
+import Calendar from 'src/components/Calendar'
+
 import { Container, Summary } from './running.style'
 
-/* eslint-disable-next-line @typescript-eslint/naming-convention */
-declare let _: any
-
 const Running = () => {
-  const initCanvas = () => {
-    const { canvas, context } = new _.Flowings()
-    const layerHelper = new _.LayerHelper()
-
-    layerHelper.layers = {
-      images: [
-        {
-          image_url:
-            'https://img.laiye.com/cLvgXicdq4RMvFgMeyiarFciatqCEPrkGudP9N6SceHhmA4Tl2unDvK4rNVCFroJZcfqMnUGvnBeDLaZpDYW0TRl9lxmD47gs70.jpg',
-          x: 48,
-          y: 48,
-          width: 150,
-          height: 150,
-          border_radius: 25,
-          resize: true,
-          rotate: 45
-        },
-        {
-          x: 0,
-          width: 750,
-          height: 750,
-          image_url:
-            'https://img.laiye.com/checkinAlbum_20200316083737_htqvLACrln.jpg',
-          z: 1,
-          opacity: 0.5
-        }
-      ],
-      texts: [
-        {
-          x: 6,
-          z: 2,
-          content: '我爱北京天安门'
-        }
-      ]
-    }
-
-    layerHelper.load().then(() => layerHelper.render(context))
-    // layerHelper.prepareToRender();
-    console.log('canvas', canvas)
-  }
-
   const renderArticle = (contents) =>
     contents.map((item, index) => {
       if (item.type === 'image') {
@@ -105,10 +62,6 @@ const Running = () => {
     return renderArticle(contents)
   }
 
-  useEffect(() => {
-    initCanvas()
-  }, [])
-
   return (
     <div>
       <Head>
@@ -118,6 +71,7 @@ const Running = () => {
       <Container>
         <Summary>{renderSummary()}</Summary>
         <div>bottom, calendar layout section</div>
+        <Calendar />
       </Container>
     </div>
   )

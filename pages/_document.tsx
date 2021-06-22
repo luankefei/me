@@ -15,7 +15,7 @@ class MyDocument extends Document {
           <Main />
           <script
             type="text/javascript"
-            src="https://imgxiaolai.laiye.com/material_20210618054316_sxeMoPLP8p.js"
+            src="/flowings.js"
             // strategy="afterInteractive"
           />
           <NextScript />

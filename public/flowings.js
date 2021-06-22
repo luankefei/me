@@ -219,6 +219,37 @@ var _ = (function (exports) {
   //   };
 
   /**
+   * 线条绘制
+   */
+  var CLine = /** @class */ (function () {
+    function CLine(props) {
+      var _this = this
+      this.z = 0
+      this.x1 = 0
+      this.y1 = 0
+      this.x2 = 0
+      this.y2 = 0
+      this.line_width = 0
+      this.color = 'transparent'
+      this.dashed = false
+      Object.keys(props).forEach(function (key) {
+        return (_this[key] = props[key])
+      })
+    }
+    CLine.prototype.draw = function (ctx) {
+      ctx.beginPath()
+      ctx.lineWidth = this.line_width
+      ctx.strokeStyle = this.color
+      ctx.moveTo(this.x1, this.y1)
+      ctx.lineTo(this.x2, this.y2)
+      ctx.stroke()
+      // console.log("draw text", this.content);
+      // ctx.fillText(this.content, this.x, this.y);
+    }
+    return CLine
+  })()
+
+  /**
    *  layper.helper
    *
    *  用于多绘图元素的图层合并
@@ -295,6 +326,11 @@ var _ = (function (exports) {
       if (instancedLayers.texts) {
         instancedLayers.texts = instancedLayers.texts.map(function (item) {
           return new CText(item)
+        })
+      }
+      if (instancedLayers.lines) {
+        instancedLayers.lines = instancedLayers.lines.map(function (item) {
+          return new CLine(item)
         })
       }
       // 从layer生成渲染队列, 默认先画图片，其次矩形 > 线条 > 文字
