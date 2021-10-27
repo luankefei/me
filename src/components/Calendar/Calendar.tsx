@@ -3,20 +3,17 @@ import { useEffect } from 'react'
 /* eslint-disable-next-line @typescript-eslint/naming-convention */
 declare let _: any
 
+const DEFAULT_PADDING = 50
+const DEFAULT_BORDER_COLOR = '#dcdee0'
+const DEFAULT_BOX_WIDTH = 1400
+const DEFAULT_BOX_HEIGHT = 850
+
 // start x & start y
 const createBoxLine = (x, y, w?, h?) => {
-  // {
-  //   color: 'blue',
-  //   x1: 10,
-  //   x2: 200,
-  //   y1: 10,
-  //   y2: 10,
-  //   line_width: 1
-  // }
-  const width = w || window.screen.width
-  const height = h || window.screen.height
-  const padding = 50
-  const color = '#dcdee0'
+  const width = w || DEFAULT_BOX_WIDTH
+  const height = h || DEFAULT_BOX_HEIGHT
+  const padding = DEFAULT_PADDING
+  const color = DEFAULT_BORDER_COLOR
 
   return [
     {
@@ -99,14 +96,42 @@ const initCanvas = () => {
     lines: createBoxLine(0, 0)
   }
 
-  layerHelper.load().then(() => layerHelper.render(context))
+  console.log(canvas)
+  return layerHelper.load().then(() => layerHelper.render(context))
+
   // layerHelper.prepareToRender();
-  console.log('canvas', canvas)
+}
+
+// 生成横竖 5 * 7 的绘图数据
+const generateCalendarLines = () => {
+  const lines = []
+  const rowLimit = 5
+  // const colLimit = 7
+
+  for (let i = 0; i < rowLimit; i++) {
+    lines.push({
+      color: DEFAULT_BORDER_COLOR,
+      x1: 0,
+      x2: DEFAULT_BOX_WIDTH - (DEFAULT_BOX_WIDTH / rowLimit) * i,
+      y1: 0,
+      y2: DEFAULT_BOX_HEIGHT,
+      line_width: 1
+    })
+  }
+
+  // for (let j = 0; j < colLimit; j++) {}
+  return lines
 }
 
 const Calendar = () => {
   useEffect(() => {
-    initCanvas()
+    // step 1: 初始化画布
+    const layerHelper = initCanvas()
+
+    // step 2: 将画布分割
+    const lines = generateCalendarLines()
+    console.log(layerHelper, lines)
+    // layerHelper.render(lines)
   }, [])
 
   return (
