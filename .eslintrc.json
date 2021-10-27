@@ -15,6 +15,7 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/no-array-index-key": "off"
+    "react/no-array-index-key": "off",
+    "no-plusplus": [2, { "allowForLoopAfterthoughts": true }]
   }
 }
