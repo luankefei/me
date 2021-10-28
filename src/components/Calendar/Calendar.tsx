@@ -55,20 +55,10 @@ const initCanvas = () => {
   const { context } = new $.Flowings()
   const layerHelper = new $.LayerHelper()
 
-  layerHelper.layers = {
-    images: [],
-    lines: createBoxLine(0, 0)
-  }
-
-  layerHelper.render(context)
-
   return {
     context,
     layerHelper
   }
-  // layerHelper.render(context)
-
-  // layerHelper.prepareToRender();
 }
 
 // 生成横竖 5 * 7 的绘图数据
@@ -111,12 +101,11 @@ const Calendar = () => {
     // step 1: 初始化画布
     const { context, layerHelper } = initCanvas()
 
-    // step 2: 将画布分割
-    const lines = generateCalendarLines()
-
+    // step 2: 绘制日历网格
     layerHelper.layers = {
-      lines
+      lines: createBoxLine(0, 0).concat(generateCalendarLines())
     }
+
     layerHelper.render(context)
   }, [])
 
