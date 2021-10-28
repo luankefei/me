@@ -1,4 +1,4 @@
-var _ = (function (exports) {
+var $ = (function (exports) {
   'use strict'
 
   /*! *****************************************************************************
@@ -22,8 +22,7 @@ var _ = (function (exports) {
       function __assign(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
           s = arguments[i]
-          for (var p in s)
-            if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p]
+          for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p]
         }
         return t
       }
@@ -31,11 +30,9 @@ var _ = (function (exports) {
   }
 
   function __spreadArrays() {
-    for (var s = 0, i = 0, il = arguments.length; i < il; i++)
-      s += arguments[i].length
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length
     for (var r = Array(s), k = 0, i = 0; i < il; i++)
-      for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
-        r[k] = a[j]
+      for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++) r[k] = a[j]
     return r
   }
 
@@ -133,14 +130,7 @@ var _ = (function (exports) {
       }
       // 圆角
       if (this.border_radius) {
-        this.clipRound(
-          ctx,
-          this.width,
-          this.height,
-          this.x,
-          this.y,
-          this.border_radius
-        )
+        this.clipRound(ctx, this.width, this.height, this.x, this.y, this.border_radius)
       }
       // 图片裁剪
       if (this.clip) {
@@ -150,17 +140,7 @@ var _ = (function (exports) {
         imageHeight = imageHeight - (this.buffer.height - this.clip.height)
       }
       // 最好能把加载流程和绘图流程分割开
-      ctx.drawImage(
-        this.buffer,
-        startX,
-        startY,
-        imageWidth,
-        imageHeight,
-        this.x,
-        this.y,
-        this.width,
-        this.height
-      )
+      ctx.drawImage(this.buffer, startX, startY, imageWidth, imageHeight, this.x, this.y, this.width, this.height)
       ctx.restore()
     }
     CImage.prototype.clipRound = function (ctx, width, height, x, y, radius) {
@@ -270,9 +250,7 @@ var _ = (function (exports) {
         set: function (target, name, value) {
           var setable = ['layers', 'locked', 'sortedState']
           if (!setable.includes(name.toString()) && target.locked) {
-            throw new TypeError(
-              'cannot set the ' + name.toString() + ' property'
-            )
+            throw new TypeError('cannot set the ' + name.toString() + ' property')
           }
           target[name] = value
           return true
@@ -390,13 +368,7 @@ var _ = (function (exports) {
       this.image = image
     }
     ImagePainter.prototype.paint = function (sprite, context) {
-      context.drawImage(
-        this.image,
-        sprite.left,
-        sprite.top,
-        sprite.width,
-        sprite.height
-      )
+      context.drawImage(this.image, sprite.left, sprite.top, sprite.width, sprite.height)
     }
     return ImagePainter
   })()
@@ -436,14 +408,7 @@ var _ = (function (exports) {
     }
     BallPainter.prototype.paint = function (sprite, context) {
       context.beginPath()
-      context.arc(
-        sprite.left + sprite.width / 2,
-        sprite.top + sprite.height / 2,
-        this.radius,
-        0,
-        Math.PI * 2,
-        false
-      )
+      context.arc(sprite.left + sprite.width / 2, sprite.top + sprite.height / 2, this.radius, 0, Math.PI * 2, false)
       context.clip()
       context.shadowColor = 'rgb(0,0,0)'
       context.shadowOffsetX = -4
@@ -512,8 +477,7 @@ var _ = (function (exports) {
     execute: function (sprite, context, time) {
       if (this.lastMove !== 0) {
         // TODO: 这里的100，是因为每帧限定在100ms，速度控制的姿势不好
-        sprite.left =
-          sprite.left - sprite.velocityX * ((time - this.lastMove) / 100)
+        sprite.left = sprite.left - sprite.velocityX * ((time - this.lastMove) / 100)
         if (sprite.left < 0) {
           sprite.left = context.canvas.width
         }
@@ -540,17 +504,19 @@ var _ = (function (exports) {
       if (id === void 0) {
         id = ''
       }
-      this.canvas = id
-        ? getCanvasElementById(id)
-        : createCanvas(screen.availWidth, screen.availHeight)
+      // Get the device pixel ratio, falling back to 1.
+      this.dpr = window.devicePixelRatio || 1
+      this.canvas = id ? getCanvasElementById(id) : createCanvas(screen.availWidth, screen.availHeight, this.dpr)
       this.context = getCanvasRenderingContext2D(this.canvas)
       this.sprites = []
+      // Scale all drawing operations by the dpr, so you don't have to worry about the difference.
+      this.context.scale(this.dpr, this.dpr)
     }
     return Flowings
   })()
+  // TODO: 小程序的适配
   // 从已存在的画布初始化
   function getCanvasElementById(id) {
-    // TODO: 小程序的适配
     var canvas = document.getElementById(id)
     if (!canvas || canvas.constructor !== HTMLCanvasElement) {
       throw new TypeError(
@@ -567,18 +533,20 @@ var _ = (function (exports) {
   function getCanvasRenderingContext2D(node) {
     var context = node.getContext('2d')
     if (context === null) {
-      throw new Error(
-        'This browser does not support 2-dimensional canvas rendering contexts.'
-      )
+      throw new Error('This browser does not support 2-dimensional canvas rendering contexts.')
     }
     return context
   }
   // 创建画布
-  function createCanvas(width, height) {
+  function createCanvas(width, height, dpr) {
     var node = document.createElement('canvas')
+    var w = width || screen.width
+    var h = height || screen.height
     node.id = 'canvas'
-    node.width = width || screen.width
-    node.height = height || screen.height
+    node.style.width = w + 'px'
+    node.style.height = h + 'px'
+    node.width = width * dpr
+    node.height = height * dpr
     document.body.appendChild(node)
     return node
   }
