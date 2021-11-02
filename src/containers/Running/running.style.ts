@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 
 const Container = styled.div`
-  border: 1px solid red;
+  // border: 1px solid red;
   padding: 20px;
 `
 

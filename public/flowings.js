@@ -158,30 +158,46 @@ var $ = (function (exports) {
     return CImage
   })()
 
-  /**
-   * 文字绘制
-   */
   var CText = /** @class */ (function () {
     function CText(props) {
       var _this = this
       this.x = 0
       this.y = 0
       this.z = 0
-      this.size = 0
+      this.size = 12
       this.line_height = 0
-      this.font_style = 0
-      this.align = 0
+      this.font_style = 'normal'
+      this.font_weight = 'normal'
+      this.align = 'left'
       this.limit = 0
-      this.color = ''
-      this.font_family = ''
+      this.color = '#000'
+      this.font_family = 'sans-serif'
       this.content = ''
+      this.baseline = 'top'
       Object.keys(props).forEach(function (key) {
         return (_this[key] = props[key])
       })
     }
     CText.prototype.draw = function (ctx) {
-      console.log('draw text', this.content)
-      ctx.fillText(this.content, this.x, this.y)
+      ctx.save()
+      ctx.font = 'normal normal ' + this.font_weight + ' ' + this.size + 'px ' + this.font_family
+      ctx.textAlign = this.align
+      ctx.textBaseline = this.baseline
+      ctx.fillStyle = this.color
+      // 按照对齐方式，修正坐标起点
+      if (this.align !== 'left') this.x = this.align === 'center' ? this.x + this.limit / 2 : this.x + this.limit
+      if (!this.limit) return ctx.fillText(this.content, this.x, this.y)
+      // 多行文本渲染
+      var measureText = ctx.measureText(this.content)
+      var charWidth = measureText.width / this.content.length
+      // 按照当前文字宽度计算余数矫正一次
+      var limit = Math.floor(this.limit / charWidth)
+      var lineCount = Math.ceil(this.content.length / limit)
+      for (var i = 0; i < lineCount; i += 1) {
+        var line = this.content.substring(limit * i, limit * i + limit)
+        ctx.fillText(line, this.x, this.y + i * this.line_height + (this.line_height - this.size) / 2)
+      }
+      ctx.restore()
     }
     return CText
   })()
@@ -236,7 +252,12 @@ var $ = (function (exports) {
    */
   var LayerHelper = /** @class */ (function () {
     function LayerHelper() {
-      this.layers = {}
+      this.layers = {
+        images: [],
+        rects: [],
+        lines: [],
+        texts: []
+      }
       this.renderQueue = []
       this.sortedState = false
       this.locked = true
@@ -263,6 +284,7 @@ var $ = (function (exports) {
       if (!this.layers.images || this.layers.images.length === 0) {
         return Promise.resolve([])
       }
+      // console.log("-----------", this.layers.images);
       var paths = this.layers.images
         .map(function (item) {
           return item.image_url
@@ -270,6 +292,7 @@ var $ = (function (exports) {
         .filter(function (item) {
           return item
         })
+      // console.log("-----------", paths);
       return loadImageList(paths).then(function (res) {
         res.forEach(function (item, index) {
           if (item.status === 'fulfilled' && _this.layers.images) {
@@ -296,17 +319,17 @@ var $ = (function (exports) {
       this.locked = false
       // 根据类型进行实例化
       var instancedLayers = lib.deepClone(this.layers)
-      if (instancedLayers.images) {
+      if (instancedLayers.images && instancedLayers.images.length) {
         instancedLayers.images = instancedLayers.images.map(function (item) {
           return new CImage(item)
         })
       }
-      if (instancedLayers.texts) {
+      if (instancedLayers.texts && instancedLayers.texts.length) {
         instancedLayers.texts = instancedLayers.texts.map(function (item) {
           return new CText(item)
         })
       }
-      if (instancedLayers.lines) {
+      if (instancedLayers.lines && instancedLayers.lines.length) {
         instancedLayers.lines = instancedLayers.lines.map(function (item) {
           return new CLine(item)
         })
