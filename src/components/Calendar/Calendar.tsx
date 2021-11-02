@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { getDayList } from '../../utils/date'
 
 /* eslint-disable-next-line @typescript-eslint/naming-convention */
 declare let $: any
@@ -8,6 +9,8 @@ const DEFAULT_BORDER_COLOR = '#dcdee0'
 const DEFAULT_BOX_WIDTH = 1400
 const DEFAULT_BOX_HEIGHT = 900
 const CALENDAR_MAIN_HEIGHT = DEFAULT_BOX_HEIGHT - CALENDAR_HEADER_HEIGHT
+const DATE_BOX_HEIGHT = 30 // 日期栏高度
+const SCHEDULE_BOX_HEIGHT = 60 // 课表栏高度
 
 // start x & start y
 const createBoxLine = (x, y, w?, h?) => {
@@ -97,14 +100,22 @@ const generateCalendarLines = (x: number, y: number, w: number, h: number, col: 
 }
 
 // 生成一行7列的文字
-function generateCalendarRowTexts(x: number, y: number, w: number, h: number, col: number, contents: string[]) {
+function generateCalendarRowTexts(
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  col: number,
+  contents: string[],
+  lineHeight?: number
+) {
   const texts = []
   for (let i = 0; i < col; i++) {
     texts.push({
+      y,
       color: '#3c4043',
       x: (DEFAULT_BOX_WIDTH / col) * i,
-      y: 0,
-      line_height: CALENDAR_HEADER_HEIGHT,
+      line_height: lineHeight || CALENDAR_HEADER_HEIGHT,
       align: 'center',
       limit: DEFAULT_BOX_WIDTH / col,
       content: contents[i] || '',
@@ -113,6 +124,18 @@ function generateCalendarRowTexts(x: number, y: number, w: number, h: number, co
   }
 
   return texts
+}
+
+// 将日历数组按行（周）切割
+const sliceDayList = (list: any[] = []) => {
+  const loopCount = Math.ceil(list.length / 7)
+  let newlist = list
+  for (let i = 0; i < loopCount; i += 1) {
+    newlist.push(newlist.slice(i * 7, i * 7 + 7))
+  }
+
+  newlist = newlist.slice(newlist.length - loopCount)
+  return newlist
 }
 
 const Calendar = () => {
@@ -125,9 +148,30 @@ const Calendar = () => {
     const borders = createBoxLine(0, 0)
     const headers = generateCalendarRowTexts(0, 0, DEFAULT_BOX_WIDTH, CALENDAR_HEADER_HEIGHT, 7, headerContents)
     const grids = generateCalendarLines(0, 0, DEFAULT_BOX_WIDTH, CALENDAR_MAIN_HEIGHT, 7, 5)
+    const dateGrids = new Array(5)
+      .fill(null)
+      .map((_, i) =>
+        generateCalendarLines(
+          0,
+          DATE_BOX_HEIGHT + (CALENDAR_MAIN_HEIGHT / 5) * i,
+          DEFAULT_BOX_WIDTH,
+          SCHEDULE_BOX_HEIGHT,
+          1,
+          1
+        )
+      )
     const scheduleGrids = new Array(5)
       .fill(null)
-      .map((_, i) => generateCalendarLines(0, (CALENDAR_MAIN_HEIGHT / 5) * i + 50, DEFAULT_BOX_WIDTH, 50, 1, 1))
+      .map((_, i) =>
+        generateCalendarLines(
+          0,
+          DATE_BOX_HEIGHT + (CALENDAR_MAIN_HEIGHT / 5) * i + SCHEDULE_BOX_HEIGHT,
+          DEFAULT_BOX_WIDTH,
+          DATE_BOX_HEIGHT,
+          1,
+          1
+        )
+      )
 
     layerHelper.layers.lines = borders
     layerHelper.layers.texts = headers
@@ -137,9 +181,36 @@ const Calendar = () => {
     ctx.save()
     ctx.translate(0, 50)
 
-    console.log('scheduleGrids', scheduleGrids)
-    layerHelper.layers.lines = [...grids, ...scheduleGrids.flat(Infinity)]
-    layerHelper.layers.texts = []
+    const d = new Date()
+    // console.log('scheduleGrids', scheduleGrids)
+    // console.log(
+    //   'w,i',
+    //   DATE_BOX_HEIGHT + (CALENDAR_MAIN_HEIGHT / 5) * i,
+    //   generateCalendarRowTexts(
+    //     0,
+    //     DATE_BOX_HEIGHT + (CALENDAR_MAIN_HEIGHT / 5) * i,
+    //     DEFAULT_BOX_WIDTH,
+    //     CALENDAR_HEADER_HEIGHT,
+    //     7,
+    //     w.map((item) => item.day.toString())
+    //   )
+    // )
+
+    // console.log('Math.floor(CALENDAR_MAIN_HEIGHT / 5) * i', Math.floor(CALENDAR_MAIN_HEIGHT / 5) * i)
+    const dates = sliceDayList(getDayList(d.getFullYear(), d.getMonth())).map((w, i) =>
+      generateCalendarRowTexts(
+        0,
+        Math.floor(CALENDAR_MAIN_HEIGHT / 5) * i,
+        DEFAULT_BOX_WIDTH,
+        DATE_BOX_HEIGHT,
+        7,
+        w.map((item) => item.day.toString()),
+        DATE_BOX_HEIGHT
+      )
+    )
+    layerHelper.layers.lines = [...grids, ...scheduleGrids.flat(Infinity), ...dateGrids.flat(Infinity)]
+    layerHelper.layers.texts = dates.flat(Infinity)
+    // console.log('dates', layerHelper.layers.texts)
     layerHelper.render(ctx)
   }, [])
 
