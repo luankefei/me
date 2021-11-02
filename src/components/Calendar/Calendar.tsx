@@ -16,8 +16,8 @@ const SCHEDULE_BOX_HEIGHT = 60 // 课表栏高度
 const createBoxLine = (x, y, w?, h?) => {
   const width = w || DEFAULT_BOX_WIDTH
   const height = h || DEFAULT_BOX_HEIGHT
-  // const padding = DEFAULT_PADDING
   const color = DEFAULT_BORDER_COLOR
+  // const padding = DEFAULT_PADDING
 
   return [
     {
@@ -67,10 +67,7 @@ const initCanvas = () => {
 
 // 生成横竖 5 * 7 的绘图数据
 const generateCalendarLines = (x: number, y: number, w: number, h: number, col: number, row: number) => {
-  console.log('generateCalendarLines', x, y)
   const lines = []
-  // const width = DEFAULT_BOX_WIDTH
-  // const height = DEFAULT_BOX_HEIGHT - CALENDAR_HEADER_HEIGHT // 预留出表头的位置
 
   // cols
   for (let i = 0; i < col; i++) {
@@ -182,21 +179,6 @@ const Calendar = () => {
     ctx.translate(0, 50)
 
     const d = new Date()
-    // console.log('scheduleGrids', scheduleGrids)
-    // console.log(
-    //   'w,i',
-    //   DATE_BOX_HEIGHT + (CALENDAR_MAIN_HEIGHT / 5) * i,
-    //   generateCalendarRowTexts(
-    //     0,
-    //     DATE_BOX_HEIGHT + (CALENDAR_MAIN_HEIGHT / 5) * i,
-    //     DEFAULT_BOX_WIDTH,
-    //     CALENDAR_HEADER_HEIGHT,
-    //     7,
-    //     w.map((item) => item.day.toString())
-    //   )
-    // )
-
-    // console.log('Math.floor(CALENDAR_MAIN_HEIGHT / 5) * i', Math.floor(CALENDAR_MAIN_HEIGHT / 5) * i)
     const dates = sliceDayList(getDayList(d.getFullYear(), d.getMonth())).map((w, i) =>
       generateCalendarRowTexts(
         0,
@@ -210,7 +192,6 @@ const Calendar = () => {
     )
     layerHelper.layers.lines = [...grids, ...scheduleGrids.flat(Infinity), ...dateGrids.flat(Infinity)]
     layerHelper.layers.texts = dates.flat(Infinity)
-    // console.log('dates', layerHelper.layers.texts)
     layerHelper.render(ctx)
   }, [])
 
