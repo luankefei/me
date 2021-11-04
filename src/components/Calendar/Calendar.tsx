@@ -193,6 +193,8 @@ const Calendar = () => {
     layerHelper.layers.lines = [...grids, ...scheduleGrids.flat(Infinity), ...dateGrids.flat(Infinity)]
     layerHelper.layers.texts = dates.flat(Infinity)
     layerHelper.render(ctx)
+
+    // 渲染课表
   }, [])
 
   return (
