@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+  nextjs:
+    ports:
+      - 3000:3000
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    volumes:
+      - ../:/home/works/www
+      - /home/works/www/node_modules
+      - /home/works/www.next
