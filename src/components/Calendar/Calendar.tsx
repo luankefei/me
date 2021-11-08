@@ -179,6 +179,14 @@ const Calendar = () => {
     ctx.translate(0, 50)
 
     const d = new Date()
+
+    // TODO: 这里要对文字进行标记
+    /*
+      先找到第一个1  第一个1前边都不是这个月
+      然后再找第二个1 是否存在 一个简单的方法 从第1个1 直接加27 然后向后遍历到结束 这样可以避免判断闰年
+
+      如果知道是否闰年 和具体月份，可以直接看最后一位是否当月最后一天。如果不是向前遍历找到第二个1
+     */
     const dates = sliceDayList(getDayList(d.getFullYear(), d.getMonth())).map((w, i) =>
       generateCalendarRowTexts(
         0,
@@ -190,6 +198,10 @@ const Calendar = () => {
         DATE_BOX_HEIGHT
       )
     )
+
+    // 渲染课表
+    // renderSchedule()
+
     layerHelper.layers.lines = [...grids, ...scheduleGrids.flat(Infinity), ...dateGrids.flat(Infinity)]
     layerHelper.layers.texts = dates.flat(Infinity)
     layerHelper.render(ctx)
@@ -197,11 +209,7 @@ const Calendar = () => {
     // 渲染课表
   }, [])
 
-  return (
-    <div>
-      <canvas />
-    </div>
-  )
+  return <div />
 }
 
 export default Calendar
