@@ -135,6 +135,24 @@ const sliceDayList = (list: any[] = []) => {
   return newlist
 }
 
+const markupDates = (dates) => {
+  const monthStartIndex = dates.findIndex((item) => item.content === '1')
+  let monthEndIndex = dates.findIndex((item, index) => item.content === '1' && index > 27)
+
+  // 进行一次纠正
+  if (monthEndIndex === -1) monthEndIndex = Infinity
+
+  return dates.map((item, index) => {
+    const outState = index < monthStartIndex || index >= monthEndIndex
+
+    console.log('outState', outState, monthStartIndex, monthEndIndex)
+    return {
+      ...item,
+      color: outState ? 'red' : item.color
+    }
+  })
+}
+
 const Calendar = () => {
   useEffect(() => {
     // step 1: 初始化画布
@@ -180,14 +198,8 @@ const Calendar = () => {
 
     const d = new Date()
 
-    // TODO: 这里要对文字进行标记
-    /*
-      先找到第一个1  第一个1前边都不是这个月
-      然后再找第二个1 是否存在 一个简单的方法 从第1个1 直接加27 然后向后遍历到结束 这样可以避免判断闰年
-
-      如果知道是否闰年 和具体月份，可以直接看最后一位是否当月最后一天。如果不是向前遍历找到第二个1
-     */
-    const dates = sliceDayList(getDayList(d.getFullYear(), d.getMonth())).map((w, i) =>
+    const monthDayList = sliceDayList(getDayList(d.getFullYear(), d.getMonth()))
+    let dates = monthDayList.map((w, i) =>
       generateCalendarRowTexts(
         0,
         Math.floor(CALENDAR_MAIN_HEIGHT / 5) * i,
@@ -199,11 +211,20 @@ const Calendar = () => {
       )
     )
 
+    // 这里要对文字进行标记
+    /*
+      先找到第一个1  第一个1前边都不是这个月
+      然后再找第二个1 是否存在 一个简单的方法 从第1个1 直接加27 然后向后遍历到结束 这样可以避免判断闰年
+
+      如果知道是否闰年 和具体月份，可以直接看最后一位是否当月最后一天。如果不是向前遍历找到第二个1
+     */
+    dates = markupDates(dates.flat(2))
+
     // 渲染课表
     // renderSchedule()
 
     layerHelper.layers.lines = [...grids, ...scheduleGrids.flat(Infinity), ...dateGrids.flat(Infinity)]
-    layerHelper.layers.texts = dates.flat(Infinity)
+    layerHelper.layers.texts = dates
     layerHelper.render(ctx)
 
     // 渲染课表
