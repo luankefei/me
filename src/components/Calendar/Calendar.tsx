@@ -135,6 +135,13 @@ const sliceDayList = (list: any[] = []) => {
   return newlist
 }
 
+/**
+ *  标记日期是否在当月内
+    先找到第一个1  第一个1前边都不是这个月
+    然后再找第二个1 是否存在 一个简单的方法 从第1个1 直接加27 然后向后遍历到结束 这样可以避免判断闰年
+
+    如果知道是否闰年 和具体月份，可以直接看最后一位是否当月最后一天。如果不是向前遍历找到第二个1
+ */
 const markupDates = (dates) => {
   const monthStartIndex = dates.findIndex((item) => item.content === '1')
   let monthEndIndex = dates.findIndex((item, index) => item.content === '1' && index > 27)
@@ -145,12 +152,22 @@ const markupDates = (dates) => {
   return dates.map((item, index) => {
     const outState = index < monthStartIndex || index >= monthEndIndex
 
-    console.log('outState', outState, monthStartIndex, monthEndIndex)
+    // console.log('outState', outState, monthStartIndex, monthEndIndex)
     return {
       ...item,
       color: outState ? 'red' : item.color
     }
   })
+}
+
+// 生成课表文字
+const generateScheduleTexts = () => {
+  console.log('generateScheduleTexts')
+  return generateCalendarRowTexts(0, DATE_BOX_HEIGHT, DEFAULT_BOX_WIDTH, SCHEDULE_BOX_HEIGHT, 7, [
+    '1111',
+    '2222',
+    '3333'
+  ])
 }
 
 const Calendar = () => {
@@ -212,19 +229,14 @@ const Calendar = () => {
     )
 
     // 这里要对文字进行标记
-    /*
-      先找到第一个1  第一个1前边都不是这个月
-      然后再找第二个1 是否存在 一个简单的方法 从第1个1 直接加27 然后向后遍历到结束 这样可以避免判断闰年
-
-      如果知道是否闰年 和具体月份，可以直接看最后一位是否当月最后一天。如果不是向前遍历找到第二个1
-     */
     dates = markupDates(dates.flat(2))
 
     // 渲染课表
-    // renderSchedule()
+    // TODO: 这里暂时，不绘制背景和折行
+    const schedules = generateScheduleTexts()
 
     layerHelper.layers.lines = [...grids, ...scheduleGrids.flat(Infinity), ...dateGrids.flat(Infinity)]
-    layerHelper.layers.texts = dates
+    layerHelper.layers.texts = [...dates, ...schedules]
     layerHelper.render(ctx)
 
     // 渲染课表
