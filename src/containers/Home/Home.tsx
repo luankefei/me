@@ -1,9 +1,32 @@
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 // import Calendar from '../../components/Calendar/Calendar'
 
 import { Container, Main, Header, Footer, Nav, Logo, Slogan, Carousel, RecommendAside, Waterfall } from './home.style'
 
 export default function Home() {
+  const [screenWidth, setScreenWidth] = useState(0)
+
+  useEffect(() => {
+    setScreenWidth(window.innerWidth)
+
+    // window.addEventListener('resize', (e) => {
+    //   console.log('resize', e)
+    // })
+  }, [])
+
+  // waterfall width: 352px
+  // padding: 300px
+  const renderWaterFall = () => {
+    const rowLimit = Math.floor((screenWidth - 300) / 352)
+
+    // console.log('rowLimit', rowLimit, screenWidth)
+
+    return rowLimit > 0
+      ? new Array(rowLimit).fill(null).map((_, index) => <Waterfall key={`waterfall_${index}`} />)
+      : []
+  }
+
   return (
     <Container>
       <Head>
@@ -35,12 +58,7 @@ export default function Home() {
           <Carousel />
           <RecommendAside />
         </div>
-        <div className="bottom">
-          <Waterfall />
-          <Waterfall />
-          <Waterfall />
-          <Waterfall />
-        </div>
+        <div className="bottom">{renderWaterFall()}</div>
       </Main>
 
       {/* <Calendar /> */}
