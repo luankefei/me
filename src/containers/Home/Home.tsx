@@ -1,18 +1,7 @@
 import Head from 'next/head'
-import Calendar from '../../components/Calendar/Calendar'
+// import Calendar from '../../components/Calendar/Calendar'
 
-import {
-  Container,
-  Main,
-  Header,
-  Footer,
-  Nav,
-  Logo,
-  Slogan,
-  Carousel,
-  RecommendAside,
-  Waterfall
-} from './home.style'
+import { Container, Main, Header, Footer, Nav, Logo, Slogan, Carousel, RecommendAside, Waterfall } from './home.style'
 
 export default function Home() {
   return (
@@ -54,7 +43,7 @@ export default function Home() {
         </div>
       </Main>
 
-      <Calendar />
+      {/* <Calendar /> */}
 
       <Footer>
         <span>design by sunken, all rights reserved</span>
