@@ -10,17 +10,15 @@ export default function Home() {
   useEffect(() => {
     setScreenWidth(window.innerWidth)
 
-    // window.addEventListener('resize', (e) => {
-    //   console.log('resize', e)
-    // })
-  }, [])
+    window.addEventListener('resize', () => {
+      setScreenWidth(window.innerWidth)
+    })
+  }, [screenWidth])
 
-  // waterfall width: 352px
-  // padding: 300px
   const renderWaterFall = () => {
-    const rowLimit = Math.floor((screenWidth - 300) / 352)
-
-    // console.log('rowLimit', rowLimit, screenWidth)
+    const padding = screenWidth > 660 ? 300 : 20
+    const sliceWidth = 352
+    const rowLimit = Math.floor((screenWidth - padding) / sliceWidth)
 
     return rowLimit > 0
       ? new Array(rowLimit).fill(null).map((_, index) => <Waterfall key={`waterfall_${index}`} />)

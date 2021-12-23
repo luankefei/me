@@ -21,6 +21,7 @@ export const Header = styled.header`
 `
 
 export const Nav = styled.nav`
+  min-width: 600px;
   height: 40px;
   border-top: 1px solid #dcdee0;
   border-bottom: 1px solid #dcdee0;
@@ -65,8 +66,8 @@ export const Main = styled.div`
   > .bottom {
     display: flex;
     justify-content: center;
-    padding-top: 50px;
-    padding-bottom: 30px;
+    padding-top: 30px;
+    padding-bottom: 50px;
   }
 `
 
@@ -99,7 +100,6 @@ export const Footer = styled.div`
 export const Carousel = styled.div`
   background: #ccc;
   height: 400px;
-  margin-right: 30px;
   flex: 1;
 `
 
@@ -107,6 +107,11 @@ export const RecommendAside = styled.aside`
   width: 360px;
   height: 400px;
   background: #ccc;
+  margin-left: 30px;
+
+  @media (max-width: 900px) {
+    display: none;
+  }
 `
 
 export const Waterfall = styled.div`
