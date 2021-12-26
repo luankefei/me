@@ -54,9 +54,6 @@ export default function Home() {
             <li>
               <Link href="/running">跑步</Link>
             </li>
-            <li>
-              <Link href="/about">关于</Link>
-            </li>
           </ul>
         </Nav>
       </Header>
