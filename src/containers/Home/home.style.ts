@@ -15,8 +15,6 @@ export const Header = styled.header`
   > nav {
     height: 40px;
     line-height: 40px;
-    // background: #545651;
-    // color: #fff;
   }
 `
 
@@ -26,7 +24,6 @@ export const Nav = styled.nav`
   border-top: 1px solid #dcdee0;
   border-bottom: 1px solid #dcdee0;
   line-height: 30px;
-  color: #53585f;
 
   ul {
     display: flex;
@@ -36,6 +33,11 @@ export const Nav = styled.nav`
     list-style: none;
     display: inline-block;
     padding: 0 30px;
+
+    > a {
+      color: #53585f;
+      text-decoration: none;
+    }
   }
 `
 
@@ -98,7 +100,10 @@ export const Footer = styled.div`
 `
 
 export const Carousel = styled.div`
-  background: #ccc;
+  background-image: url(https://imgxiaolai.laiye.com/material_20211223102021_igCj0NaxTj.jpeg);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
   height: 400px;
   flex: 1;
 `

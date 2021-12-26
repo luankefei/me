@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 // import Calendar from '../../components/Calendar/Calendar'
 
 import { Container, Main, Header, Footer, Nav, Logo, Slogan, Carousel, RecommendAside, Waterfall } from './home.style'
@@ -41,12 +42,21 @@ export default function Home() {
         </div>
         <Nav>
           <ul>
-            <li>首页</li>
-            <li>菜谱</li>
-            <li>点评</li>
-            <li>跑步</li>
-            <li>技术</li>
-            <li>关于</li>
+            <li>
+              <Link href="/">首页</Link>
+            </li>
+            <li>
+              <Link href="/recipe">菜谱</Link>
+            </li>
+            <li>
+              <Link href="/comment">点评</Link>
+            </li>
+            <li>
+              <Link href="/running">跑步</Link>
+            </li>
+            <li>
+              <Link href="/about">关于</Link>
+            </li>
           </ul>
         </Nav>
       </Header>
