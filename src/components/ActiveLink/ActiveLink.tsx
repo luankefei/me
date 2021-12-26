@@ -11,7 +11,7 @@ import React, { Children } from 'react'
 
 type TProps = {
   activeClassName: string
-  children: JSX.Element
+  children: JSX.Element | string
   href: string
   as?: string
 }

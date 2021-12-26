@@ -38,6 +38,10 @@ export const Nav = styled.nav`
       color: #53585f;
       text-decoration: none;
     }
+
+    .active {
+      color: #ed4441;
+    }
   }
 `
 
