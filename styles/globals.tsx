@@ -13,8 +13,7 @@ export const globalStyles = (
       }
 
       body {
-        font-family: 'PingFangSC', 'Helvetica Neue', Helvetica, Arial,
-          sans-serif;
+        font-family: 'PingFangSC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
         backface-visibility: hidden;
         -webkit-backface-visibility: hidden;
         -webkit-font-smoothing: antialiased;
