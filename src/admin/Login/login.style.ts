@@ -22,7 +22,6 @@ const Login = styled.div`
   padding: 50px;
   font-size: 16px;
   width: 300px;
-  // height: 200px;
   background: rgba(255, 255, 255, 0.75);
   box-shadow: 3px 3px 6px 1px #eee;
   border-radius: 8px;
@@ -60,77 +59,17 @@ const Login = styled.div`
   }
 `
 
-// const Editor = styled.div`
-//   float: left;
-//   width: 50%;
-//   box-sizing: border-box;
-//   padding: 30px;
-
-//   dt {
-//     padding-bottom: 10px;
-//   }
-
-//   dd {
-//     margin: 0;
-//   }
-
-//   input {
-//     width: 100%;
-//     font-size: 16px;
-//     height: 24px;
-//   }
-
-//   textarea {
-//     width: 100%;
-//     height: 500px;
-//     resize: none;
-//     font-size: 16px;
-//   }
-
-//   .submit {
-//     width: 100px;
-//     height: 30px;
-//     background-color: #3dacb0;
-//     color: #fff;
-//     border: none;
-//   }
-// }
-// `
-
-// const Uploader = styled.div`
-//   float: right;
-//   width: 50%;
-//   box-sizing: border-box;
-//   padding: 30px;
-
-//   dt {
-//     padding-bottom: 10px;
-//   }
-
-//   dd {
-//     margin-left: 0;
-//     margin-bottom: 20px;
-//     height: 30px;
-//   }
-
-//   dd input[disabled] {
-//     height: 24px;
-//     font-size: 16px;
-//     width: 100%;
-//   }
-
-//   dd button {
-//     width: 100px;
-//     height: 30px;
-//     background-color: #3dacb0;
-//     color: #fff;
-//     border: none;
-//   }
-// `
+const ErrorMessage = styled.div`
+  color: #ed4441;
+  height: 20px;
+  line-height: 20px;
+  // background: red;
+`
 
 export {
   Container,
-  Login
+  Login,
+  ErrorMessage
   // Editor,
   // Uploader
 }

@@ -1,9 +1,9 @@
 import {
-  // useState,
+  useState,
   // useEffect,
   useRef
 } from 'react'
-import { Container, Login } from './login.style'
+import { Container, Login, ErrorMessage } from './login.style'
 // import fetch from 'unfetch'
 
 import AdminNav from '../../components/AdminNav'
@@ -11,17 +11,21 @@ import AdminNav from '../../components/AdminNav'
 // const HOST = 'http://114.55.42.131'
 
 const Admin = () => {
+  const [errorMessage, setErrorMessage] = useState('')
   const usernameField = useRef(null)
   const passwordField = useRef(null)
 
   const doLogin = () => {
-    // const name = usernameField.current.value
-    // const password = passwordField.current.value
-    // if (name === 'admin' && password === `mPXFYkiaOwWWHLbYkZ0tk"tW`) {
-    //   setVisible(true)
-    // } else {
-    //   alert('用户名或密码不正确')
-    // }
+    const name = usernameField.current.value
+    const password = passwordField.current.value
+
+    if (name === '' || password === '') {
+      setErrorMessage('用户名或密码不正确')
+    } else if (errorMessage !== '') {
+      setErrorMessage('')
+
+      // do login
+    }
   }
 
   return (
@@ -37,9 +41,10 @@ const Admin = () => {
         <dl>
           <dt>密码</dt>
           <dd>
-            <input ref={passwordField} />
+            <input type="password" ref={passwordField} />
           </dd>
         </dl>
+        <ErrorMessage>{errorMessage}</ErrorMessage>
         <button type="submit" onClick={doLogin}>
           登录
         </button>

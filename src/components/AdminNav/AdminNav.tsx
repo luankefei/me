@@ -1,4 +1,4 @@
-import AcitveLink from '../ActiveLink/ActiveLink'
+import ActiveLink from '../ActiveLink/ActiveLink'
 import { Header, Nav, User } from './admin-nav.style'
 
 const AdminNav = () => {
@@ -10,20 +10,20 @@ const AdminNav = () => {
       <Nav>
         <ul>
           <li>
-            <AcitveLink activeClassName="active" href="/admin/login">
+            <ActiveLink activeClassName="active" href="/admin/login">
               <span>登录</span>
-            </AcitveLink>
+            </ActiveLink>
           </li>
           <li>
-            <AcitveLink activeClassName="active" href="/admin/asset">
+            <ActiveLink activeClassName="active" href="/admin/asset">
               <span>素材</span>
-            </AcitveLink>
+            </ActiveLink>
           </li>
           <li>
             {' '}
-            <AcitveLink activeClassName="active" href="/admin/content">
+            <ActiveLink activeClassName="active" href="/admin/content">
               <span>内容</span>
-            </AcitveLink>
+            </ActiveLink>
           </li>
         </ul>
       </Nav>
