@@ -10,16 +10,18 @@ import { Container, RegisterForm, ErrorMessage, UserInfo, RegisterWrapper } from
 
 type IProps = {
   userList: any[]
-  getUserList: () => Promise<any>
+  createUser: () => Promise<any>
+  getUserList: (data) => Promise<any>
 }
 
 const Register = (props: IProps) => {
-  const { userList, getUserList } = props
+  const { userList, getUserList, createUser } = props
   console.log('userList: ', userList, props)
 
   const [errorMessage, setErrorMessage] = useState('')
   const usernameField = useRef(null)
   const nicknameField = useRef(null)
+  const emailField = useRef(null)
   const passwordField = useRef(null)
   const repassField = useRef(null)
   const avatarField = useRef(null)
@@ -34,21 +36,24 @@ const Register = (props: IProps) => {
   const doRegister = () => {
     const username = usernameField.current.value
     const nickname = nicknameField.current.value
+    const email = emailField.current.value
     const password = passwordField.current.value
     const repass = repassField.current.value
     const avatar = avatarField.current.value
 
-    if (username === '' || password === '' || nickname === '') return setErrorMessage('用户名、密码和昵称不能为空')
+    if (username === '' || password === '' || nickname === '' || email === '')
+      return setErrorMessage('用户名、密码、邮件和昵称不能为空')
     if (password !== repass) return setErrorMessage('两次输入密码不一致')
 
     const user = {
       username,
       nickname,
       password,
-      avatar
+      avatar,
+      email
     }
 
-    console.log('生成用户', user)
+    return createUser(user).then((res) => console.log('doRegister', res))
   }
 
   return (
@@ -65,7 +70,13 @@ const Register = (props: IProps) => {
           <dl>
             <dt>昵称</dt>
             <dd>
-              <input type="password" ref={nicknameField} />
+              <input ref={nicknameField} />
+            </dd>
+          </dl>
+          <dl>
+            <dt>电子邮箱</dt>
+            <dd>
+              <input ref={emailField} />
             </dd>
           </dl>
           <dl>
@@ -83,7 +94,7 @@ const Register = (props: IProps) => {
           <dl>
             <dt>头像链接</dt>
             <dd>
-              <input type="password" ref={avatarField} />
+              <input ref={avatarField} />
             </dd>
           </dl>
           <ErrorMessage>{errorMessage}</ErrorMessage>
@@ -91,7 +102,9 @@ const Register = (props: IProps) => {
             注册
           </button>
         </RegisterForm>
-        <UserInfo>{JSON.stringify(userList, null, 4)}</UserInfo>
+        <UserInfo>
+          <pre>{JSON.stringify(userList, null, 4)}</pre>
+        </UserInfo>
       </RegisterWrapper>
     </Container>
   )
@@ -102,6 +115,7 @@ const mapStateToProps = createStructuredSelector({
 })
 
 const mapDispatchToProps = {
+  createUser: actions.createUser,
   getUserList: actions.getUserList
 }
 
