@@ -1,4 +1,5 @@
 import { globalStyles } from '../styles/globals'
+import storeWrapper from '../src/redux/store'
 
 const App = ({ Component, pageProps }: any) => (
   <>
@@ -7,4 +8,4 @@ const App = ({ Component, pageProps }: any) => (
   </>
 )
 
-export default App
+export default storeWrapper.withRedux(App)

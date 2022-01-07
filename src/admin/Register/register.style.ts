@@ -12,6 +12,11 @@ export const Container = styled.div`
   padding: 0;
 `
 
+export const RegisterWrapper = styled.div`
+  display: flex;
+  height: 100%;
+`
+
 export const RegisterForm = styled.form`
   padding: 100px 100px 100px 70px;
   font-size: 16px;
@@ -61,6 +66,11 @@ export const ErrorMessage = styled.div`
   color: #ed4441;
   height: 20px;
   line-height: 20px;
+`
+
+export const UserInfo = styled.div`
+  padding: 100px 100px 100px 70px;
+  font-size: 16px;
 `
 
 export default { Container, RegisterForm, ErrorMessage }
