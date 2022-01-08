@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8000/api/me'
+const BASE_URL = 'http://192.168.50.165:8000/api/me'
 
 export default {
   user: `${BASE_URL}/user`,

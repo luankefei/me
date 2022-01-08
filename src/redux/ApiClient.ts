@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-unfetch'
+import fetch, { IsomorphicRequestInit } from 'isomorphic-unfetch'
 
 import { IRequestParams, IRequest } from '../interface/request.type'
 
@@ -60,7 +60,8 @@ class ApiClient {
       method: method.toUpperCase(),
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include'
     }
     let path = url
 

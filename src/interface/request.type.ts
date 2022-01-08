@@ -1,5 +1,6 @@
 export type IRequestParams = {
   method: string
+  credentials?: string
   headers?: any
   body?: any
 }
