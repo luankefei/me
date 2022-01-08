@@ -26,6 +26,7 @@ const Nav = styled.nav`
     list-style: none;
     display: inline-block;
     padding: 0 30px;
+    cursor: pointer;
 
     > span {
       color: #fff;
