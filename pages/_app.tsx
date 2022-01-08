@@ -1,5 +1,5 @@
 import { globalStyles } from '../styles/globals'
-import storeWrapper from '../src/redux/store'
+import storeWrapper from '../src/redux/createStore'
 
 const App = ({ Component, pageProps }: any) => (
   <>

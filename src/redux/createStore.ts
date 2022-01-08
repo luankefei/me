@@ -2,7 +2,7 @@ import { createStore as _createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { createWrapper } from 'next-redux-wrapper'
 
-import createReducer from './reducer'
+import createRootReducer from './rootReducer'
 import ApiClient from './ApiClient'
 
 function createStore(state: object = {}) {
@@ -10,7 +10,7 @@ function createStore(state: object = {}) {
   const client = new ApiClient()
 
   // create app reducer
-  const reducer = createReducer()
+  const reducer = createRootReducer()
 
   // create redux middlewares
   // TODO: add redux logger

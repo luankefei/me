@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 
-import { makeSelectUserList } from './selector'
-import { actions } from './reducer'
+import { makeSelectUserList } from './register.selector'
+import { actions } from './register.reducer'
 import AdminNav from '../../components/AdminNav'
 import { Container, RegisterForm, ErrorMessage, UserInfo, RegisterWrapper } from './register.style'
 
