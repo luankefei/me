@@ -3,14 +3,14 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 
-import { makeSelectUserList } from './register.selector'
-import { actions } from './register.reducer'
+import { makeSelectUserList } from '../admin.selector'
+import { actions } from '../admin.reducer'
 import AdminNav from '../../components/AdminNav'
 import { Container, RegisterForm, ErrorMessage, UserInfo, RegisterWrapper } from './register.style'
 
 type IProps = {
   userList: any[]
-  createUser: () => Promise<any>
+  createUser: (user: any) => Promise<any>
   getUserList: (data) => Promise<any>
 }
 

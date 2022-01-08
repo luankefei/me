@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import { LOCATION_CHANGE } from 'react-router-redux'
 
-import registerReducer from '../admin/Register/register.reducer'
+import adminReducer from '../admin/admin.reducer'
 
 // Initial routing state
 const routeInitialState = {
@@ -24,6 +24,6 @@ const rootReducer = (state = routeInitialState, action) => {
 export default function createReducer() {
   return combineReducers({
     route: rootReducer,
-    admin: registerReducer
+    admin: adminReducer
   })
 }
