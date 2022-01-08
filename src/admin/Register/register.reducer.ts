@@ -1,8 +1,7 @@
 /*
- * MeReducer
+ * register reducer
  */
-import { createReducer, createAsyncAction } from './tools'
-// import { createReducer, createAsyncAction } from 'redux-action-tools'
+import { createReducer, createAsyncAction } from 'src/redux/reduxActionTools'
 
 import API from '../../utils/api'
 import { IClient } from '../../interface/client.type'
