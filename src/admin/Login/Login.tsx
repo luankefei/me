@@ -25,6 +25,7 @@ const Admin = (props: IProps) => {
   console.log('admin auth', auth)
 
   const [errorMessage, setErrorMessage] = useState('')
+  const [userInfo, setUserInfo] = useState(null)
   const usernameField = useRef(null)
   const passwordField = useRef(null)
 
@@ -41,6 +42,9 @@ const Admin = (props: IProps) => {
     // do login
     login({ username, password }).then((res) => {
       console.log('login success', res)
+
+      // TODO: user_hash to user
+      setUserInfo(res)
     })
   }
 
@@ -48,6 +52,7 @@ const Admin = (props: IProps) => {
     <Container>
       <AdminNav />
       <Login>
+        {userInfo}
         <dl>
           <dt>用户名</dt>
           <dd>

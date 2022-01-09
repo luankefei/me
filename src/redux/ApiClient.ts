@@ -1,4 +1,4 @@
-import fetch, { IsomorphicRequestInit } from 'isomorphic-unfetch'
+import fetch from 'isomorphic-unfetch'
 
 import { IRequestParams, IRequest } from '../interface/request.type'
 
