@@ -9,23 +9,24 @@ import { createStructuredSelector } from 'reselect'
 
 import AdminNav from '../../components/AdminNav'
 import { actions } from '../admin.reducer'
-import { makeSelectAuth } from '../admin.selector'
+import { makeSelectAuth, makeSelectUser } from '../admin.selector'
 import { Container, Login, ErrorMessage } from './login.style'
 
 // const HOST = 'http://114.55.42.131'
 
 interface IProps {
   auth: string
-  login: (username: string, password: string) => Promise<any>
+  userInfo: any
+  login: (data: { username: string; password: string }) => Promise<any>
+  getUser: (userNameHash: string) => Promise<any>
 }
 
 const Admin = (props: IProps) => {
-  const { auth, login } = props
+  const { auth, userInfo, login, getUser } = props
 
   console.log('admin auth', auth)
 
   const [errorMessage, setErrorMessage] = useState('')
-  const [userInfo, setUserInfo] = useState(null)
   const usernameField = useRef(null)
   const passwordField = useRef(null)
 
@@ -42,9 +43,8 @@ const Admin = (props: IProps) => {
     // do login
     login({ username, password }).then((res) => {
       console.log('login success', res)
-
-      // TODO: user_hash to user
-      setUserInfo(res)
+      getUser(res.data)
+      // getUser({ userNameHash: res.data }res.data, '12345')
     })
   }
 
@@ -52,7 +52,7 @@ const Admin = (props: IProps) => {
     <Container>
       <AdminNav />
       <Login>
-        {userInfo}
+        <div>{userInfo ? JSON.stringify(userInfo) : ''}</div>
         <dl>
           <dt>用户名</dt>
           <dd>
@@ -75,11 +75,13 @@ const Admin = (props: IProps) => {
 }
 
 const mapStateToProps = createStructuredSelector({
+  userInfo: makeSelectUser(),
   auth: makeSelectAuth()
 })
 
 const mapDispatchToProps = {
-  login: actions.login
+  login: actions.login,
+  getUser: actions.getUser
 }
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
