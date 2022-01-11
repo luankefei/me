@@ -2,6 +2,7 @@
  * App - this component should be around all the pages.
  */
 import React, { useState, useEffect, ReactNode } from 'react'
+import Error from '../Error'
 
 export const Permission = React.createContext([])
 
@@ -19,7 +20,11 @@ const App = (props: TProps) => {
     setRootPermission(['admin/login', 'admin/register'])
   }, [])
 
-  return <Permission.Provider value={rootPermission}>{children}</Permission.Provider>
+  return (
+    <Permission.Provider value={rootPermission}>
+      <Error>{children}</Error>
+    </Permission.Provider>
+  )
 }
 
 export default App
