@@ -2,7 +2,7 @@
  * App - this component should be around all the pages.
  */
 import React, { useState, useEffect, ReactNode } from 'react'
-import Error from '../Error'
+import ErrorBoundray from '../ErrorBoundray'
 
 export const Permission = React.createContext([])
 
@@ -22,7 +22,7 @@ const App = (props: TProps) => {
 
   return (
     <Permission.Provider value={rootPermission}>
-      <Error>{children}</Error>
+      <ErrorBoundray>{children}</ErrorBoundray>
     </Permission.Provider>
   )
 }

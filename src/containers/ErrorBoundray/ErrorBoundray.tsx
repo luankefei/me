@@ -11,7 +11,7 @@ type TState = {
   errorInfo: ErrorInfo
 }
 
-class Error extends Component<TProps, TState> {
+class ErrorBoundray extends Component<TProps, TState> {
   constructor(props: TProps) {
     super(props)
 
@@ -53,4 +53,4 @@ class Error extends Component<TProps, TState> {
   }
 }
 
-export default Error
+export default ErrorBoundray
