@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
+import withAuth from '../../components/withAuth'
 import ActiveLink from '../../components/ActiveLink'
 // import Calendar from '../../components/Calendar/Calendar'
 
 import { Container, Main, Header, Footer, Nav, Logo, Slogan, Carousel, RecommendAside, Waterfall } from './home.style'
 
-export default function Home() {
+const Home = () => {
   const [screenWidth, setScreenWidth] = useState(0)
 
   useEffect(() => {
@@ -84,3 +85,5 @@ export default function Home() {
     </Container>
   )
 }
+
+export default withAuth('home')(Home)

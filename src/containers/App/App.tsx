@@ -1,10 +1,9 @@
 /**
  * App - this component should be around all the pages.
  */
-import React, { useState, useEffect, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import ErrorBoundray from '../ErrorBoundray'
-
-export const Permission = React.createContext([])
+import AuthProvider from '../../context/auth.context'
 
 type TProps = {
   children: ReactNode[]
@@ -12,18 +11,18 @@ type TProps = {
 
 const App = (props: TProps) => {
   const { children } = props
-  const [rootPermission, setRootPermission] = useState([])
+  // const [permissionList, setPermissionList] = useState([])
 
-  useEffect(() => {
-    // 获取权限列表
-    // getRootPermission
-    setRootPermission(['admin/login', 'admin/register'])
-  }, [])
+  // useEffect(() => {
+  //   // 获取权限列表
+  //   // getRootPermission
+  //   setPermissionList(['admin/login', 'admin/register'])
+  // }, [])
 
   return (
-    <Permission.Provider value={rootPermission}>
+    <AuthProvider>
       <ErrorBoundray>{children}</ErrorBoundray>
-    </Permission.Provider>
+    </AuthProvider>
   )
 }
 
