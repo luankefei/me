@@ -2,4 +2,4 @@
 import Home from './home'
 // import Running from './running'
 
-export default () => <Home />
+export default Home
