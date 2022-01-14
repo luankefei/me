@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 
+import withAuth from '../../components/withAuth'
 import AdminNav from '../../components/AdminNav'
 import { actions } from '../admin.reducer'
 import { makeSelectAuth, makeSelectUser } from '../admin.selector'
@@ -21,6 +22,7 @@ interface IProps {
   getUser: (userNameHash: string) => Promise<any>
 }
 
+@withAuth('admin/login')
 const Login = (props: IProps) => {
   const { auth, userInfo, login, getUser } = props
 
