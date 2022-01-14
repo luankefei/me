@@ -30,9 +30,10 @@ export const Nav = styled.nav`
   }
 
   ul li {
-    list-style: none;
     display: inline-block;
+    list-style: none;
     padding: 0 30px;
+    cursor: pointer;
 
     > a {
       color: #53585f;
