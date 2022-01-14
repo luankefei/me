@@ -10,7 +10,7 @@ import { createStructuredSelector } from 'reselect'
 import AdminNav from '../../components/AdminNav'
 import { actions } from '../admin.reducer'
 import { makeSelectAuth, makeSelectUser } from '../admin.selector'
-import { Container, Login, ErrorMessage } from './login.style'
+import { Container, LoginContainer, ErrorMessage } from './login.style'
 
 // const HOST = 'http://114.55.42.131'
 
@@ -21,7 +21,7 @@ interface IProps {
   getUser: (userNameHash: string) => Promise<any>
 }
 
-const Admin = (props: IProps) => {
+const Login = (props: IProps) => {
   const { auth, userInfo, login, getUser } = props
 
   console.log('admin auth', auth)
@@ -51,7 +51,7 @@ const Admin = (props: IProps) => {
   return (
     <Container>
       <AdminNav />
-      <Login>
+      <LoginContainer>
         <div>{userInfo ? JSON.stringify(userInfo) : ''}</div>
         <dl>
           <dt>用户名</dt>
@@ -69,7 +69,7 @@ const Admin = (props: IProps) => {
         <button type="submit" onClick={doLogin}>
           登录
         </button>
-      </Login>
+      </LoginContainer>
     </Container>
   )
 }
@@ -86,4 +86,4 @@ const mapDispatchToProps = {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
 
-export default compose(withConnect)(Admin)
+export default compose(withConnect)(Login)

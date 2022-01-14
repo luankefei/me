@@ -14,7 +14,7 @@ const Container = styled.div`
   padding: 0;
 `
 
-const Login = styled.div`
+const LoginContainer = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -68,7 +68,7 @@ const ErrorMessage = styled.div`
 
 export {
   Container,
-  Login,
+  LoginContainer,
   ErrorMessage
   // Editor,
   // Uploader
