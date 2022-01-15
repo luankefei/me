@@ -4,6 +4,7 @@ function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component'
 }
 
+// @see https://github.com/vercel/next.js/pull/31376/files
 const withAuth = (pageName: string) => {
   const innerAuth = (WrappedComponent) => {
     const WithAuth = (props) => {

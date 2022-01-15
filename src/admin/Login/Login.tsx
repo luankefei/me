@@ -22,7 +22,6 @@ interface IProps {
   getUser: (userNameHash: string) => Promise<any>
 }
 
-@withAuth('admin/login')
 const Login = (props: IProps) => {
   const { auth, userInfo, login, getUser } = props
 
@@ -88,4 +87,4 @@ const mapDispatchToProps = {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
 
-export default compose(withConnect)(Login)
+export default compose(withConnect)(withAuth('admin/login')(Login))
