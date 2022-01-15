@@ -5,6 +5,8 @@ import { createStructuredSelector } from 'reselect'
 
 import { makeSelectUserList } from '../admin.selector'
 import { actions } from '../admin.reducer'
+
+import withAuth from '../../components/withAuth'
 import AdminNav from '../../components/AdminNav'
 import { Container, RegisterForm, ErrorMessage, UserInfo, RegisterWrapper } from './register.style'
 
@@ -121,6 +123,6 @@ const mapDispatchToProps = {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
 
-export default compose(withConnect)(Register)
+export default compose(withConnect)(withAuth('admin/register')(Register))
 
 // export default Register
