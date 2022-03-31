@@ -7,13 +7,10 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { createStructuredSelector } from 'reselect'
 
-import withAuth from '../../components/withAuth'
 import AdminNav from '../../components/AdminNav'
 import { actions } from '../admin.reducer'
 import { makeSelectAuth, makeSelectUser } from '../admin.selector'
 import { Container, LoginContainer, ErrorMessage } from './login.style'
-
-// const HOST = 'http://114.55.42.131'
 
 interface IProps {
   auth: string
@@ -87,4 +84,4 @@ const mapDispatchToProps = {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
 
-export default compose(withConnect)(withAuth('admin/login')(Login))
+export default compose(withConnect)(Login)

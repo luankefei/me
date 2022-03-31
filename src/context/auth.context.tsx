@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 type TProps = {
   children: JSX.Element
 }
 
-const authList = ['admin/login', 'admin/register', 'home']
-const AuthContext = React.createContext(authList)
+const AuthContext = React.createContext('')
 
 const AuthProvider = (props: TProps) => {
   const { children } = props
-  return <AuthContext.Provider value={authList}>{children}</AuthContext.Provider>
+  const [auth, setAuth] = useState('')
+
+  useEffect(() => {
+    setAuth(sessionStorage.getItem('auth'))
+  }, [])
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
 }
 
 export { AuthContext }

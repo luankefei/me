@@ -17,20 +17,21 @@ const initialState = {
 const login = (data, client: IClient) => client.post(API.login, { data })
 
 // TODO: api client restful api support
-const getUser = (userNameHash: string, client: IClient) => {
-  console.log('getUser', userNameHash)
-  return client.get(`${API.user}/${userNameHash}`)
-}
+const getUser = (userNameHash: string, client: IClient) => client.get(`${API.user}/${userNameHash}`)
 
 const getUserList = (_, client: IClient) => client.get(API.userList)
 
 const createUser = (data, client: IClient) => client.post(API.user, { data })
 
 // hot replace
-const AUTH_SUCCESS = (state: any, action: any) => ({
-  ...state,
-  auth: action.payload.data
-})
+const AUTH_SUCCESS = (state: any, action: any) => {
+  const auth = action.payload.data
+  sessionStorage.setItem('auth', auth)
+  return {
+    ...state,
+    auth
+  }
+}
 
 // hot replace
 const USER_LIST_SUCCESS = (state: any, action: any) => ({

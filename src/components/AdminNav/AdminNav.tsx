@@ -12,12 +12,16 @@ const AdminNav = () => (
           </ActiveLink>
         </li>
         <li>
+          <ActiveLink activeClassName="active" href="/admin/recipe">
+            <span>菜谱</span>
+          </ActiveLink>
+        </li>
+        <li>
           <ActiveLink activeClassName="active" href="/admin/asset">
             <span>素材</span>
           </ActiveLink>
         </li>
         <li>
-          {' '}
           <ActiveLink activeClassName="active" href="/admin/content">
             <span>内容</span>
           </ActiveLink>

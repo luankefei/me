@@ -13,7 +13,7 @@ import { Container, RegisterForm, ErrorMessage, UserInfo, RegisterWrapper } from
 type IProps = {
   userList: any[]
   createUser: (user: any) => Promise<any>
-  getUserList: (data) => Promise<any>
+  getUserList: () => Promise<any>
 }
 
 const Register = (props: IProps) => {
@@ -123,6 +123,6 @@ const mapDispatchToProps = {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps)
 
-export default compose(withConnect)(withAuth('admin/register')(Register))
+export default compose(withConnect)(withAuth(Register))
 
 // export default Register
