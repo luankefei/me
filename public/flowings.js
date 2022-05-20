@@ -199,6 +199,7 @@ var $ = (function (exports) {
       })
     }
     CText.prototype.draw = function (ctx) {
+      var _this = this
       ctx.save()
       ctx.font =
         'normal normal ' +
@@ -216,22 +217,29 @@ var $ = (function (exports) {
           this.align === 'center'
             ? this.x + this.limit / 2
             : this.x + this.limit
+      // 这里对换行符进行处理，然后逐行绘制
+      this.content.split('\n').forEach(function (content) {
+        _this.content = content
+        _this.drawLine(ctx)
+      })
+      ctx.restore()
+    }
+    CText.prototype.drawLine = function (ctx) {
       if (!this.limit) return ctx.fillText(this.content, this.x, this.y)
       // 多行文本渲染
       var measureText = ctx.measureText(this.content)
       var charWidth = measureText.width / this.content.length
       // 按照当前文字宽度计算余数矫正一次
       var limit = Math.floor(this.limit / charWidth)
+      // TODO: 5.20 这里会跳过空行 不过可以在传入的地方加空格来hack 这种方式也许更好
       var lineCount = Math.ceil(this.content.length / limit)
       for (var i = 0; i < lineCount; i += 1) {
         var line = this.content.substring(limit * i, limit * i + limit)
-        ctx.fillText(
-          line,
-          this.x,
-          this.y + i * this.line_height + (this.line_height - this.size) / 2
-        )
+        var offsetY = (this.line_height - this.size) / 2
+        ctx.fillText(line, this.x, this.y + offsetY)
+        this.y += this.line_height
       }
-      ctx.restore()
+      return this.y
     }
     return CText
   })()

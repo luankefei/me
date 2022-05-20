@@ -8,10 +8,13 @@ declare let $: any
 const CALENDAR_HEADER_HEIGHT = 50
 const DEFAULT_BORDER_COLOR = '#dcdee0'
 const DEFAULT_BOX_WIDTH = 1400
-const DEFAULT_BOX_HEIGHT = 1070
+
+// 所有格子高度 包含课表栏
+// 270 * 6
+const DEFAULT_BOX_HEIGHT = 1620
 const CALENDAR_MAIN_HEIGHT = DEFAULT_BOX_HEIGHT - CALENDAR_HEADER_HEIGHT
 const DATE_BOX_HEIGHT = 30 // 日期栏高度
-const SCHEDULE_BOX_HEIGHT = 60 // 课表栏高度
+const SCHEDULE_BOX_HEIGHT = 100 // 课表栏高度
 const COL_LIMIT = 7 // 每周7天
 const ROW_LIMIT = 6 // 每月最多6周
 
@@ -137,7 +140,7 @@ function generateCalendarRowTexts(
       align: 'center',
       limit: DEFAULT_BOX_WIDTH / col,
       content: contents[i] || '',
-      size: 16
+      size: 13
     })
   }
 
@@ -185,14 +188,32 @@ const markupDates = (dates) => {
 
 // 生成课表文字
 const generateScheduleTexts = () => {
-  console.log('generateScheduleTexts')
+  const content =
+    '3.09@6:42/km HR avg 161\n5.88km@5:50/km\n \n早上3km轻松跑，中午尝试跑马拉松配速，但比较疲劳'
+
   return generateCalendarRowTexts(
     0,
     DATE_BOX_HEIGHT,
     DEFAULT_BOX_WIDTH,
     SCHEDULE_BOX_HEIGHT,
     COL_LIMIT,
-    ['1111', '2222', '3333']
+    ['', '', '', '', '', '', content],
+    20
+  )
+}
+
+// 生成饮食文字，相对课表文字偏移一个课表栏的高度
+const generateDietTexts = () => {
+  const content =
+    '早餐8:00 / 水爆蛋 / 酸牛奶 / 蒸蛋\n加餐 坚果 / 咖啡\n午餐12:30 酱牛肉 / 洋葱胡萝卜炒鸡腿肉 / 蘑菇炒鸡腿肉 / 烤鱼\n晚餐 4:30 同上'
+  return generateCalendarRowTexts(
+    0,
+    DATE_BOX_HEIGHT + SCHEDULE_BOX_HEIGHT,
+    DEFAULT_BOX_WIDTH,
+    SCHEDULE_BOX_HEIGHT,
+    COL_LIMIT,
+    ['', '', '', '', '', '', content],
+    20
   )
 }
 
@@ -279,15 +300,17 @@ const Calendar = () => {
     dates = markupDates(dates.flat(2))
 
     // 渲染课表
-    // TODO: 这里暂时，不绘制背景和折行
     const schedules = generateScheduleTexts()
+
+    // 渲染饮食记录
+    const diet = generateDietTexts()
 
     layerHelper.layers.lines = [
       ...grids,
       ...scheduleGrids.flat(Infinity),
       ...dateGrids.flat(Infinity)
     ]
-    layerHelper.layers.texts = [...dates, ...schedules]
+    layerHelper.layers.texts = [...dates, ...schedules, ...diet]
     layerHelper.render(ctx)
 
     // 渲染课表
