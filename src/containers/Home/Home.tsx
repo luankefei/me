@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
-import withAuth from '../../components/withAuth'
 import ActiveLink from '../../components/ActiveLink'
-// import Calendar from '../../components/Calendar/Calendar'
 
 import { Container, Main, Header, Footer, Nav, Logo, Slogan, Carousel, RecommendAside, Waterfall } from './home.style'
 
@@ -86,4 +84,4 @@ const Home = () => {
   )
 }
 
-export default withAuth(Home)
+export default Home
