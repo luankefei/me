@@ -5,9 +5,9 @@ function getDisplayName(WrappedComponent) {
 }
 
 // @see https://github.com/vercel/next.js/pull/31376/files
-// const withAuth = (pageName: string) => {
 const withAuth = (WrappedComponent) => {
   const innerAuth = (props) => {
+    console.log('withAuth', WrappedComponent, props)
     const PermissionDenied = () => <div>没有权限，请联系管理员开通权限！</div>
     // 匹配权限
     const matchPermission = (value) =>
@@ -18,8 +18,5 @@ const withAuth = (WrappedComponent) => {
   innerAuth.displayName = `WithAuth(${getDisplayName(WrappedComponent)})`
   return innerAuth
 }
-
-// return innerAuth
-// }
 
 export default withAuth

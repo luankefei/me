@@ -86,4 +86,4 @@ const Home = () => {
   )
 }
 
-export default withAuth('home')(Home)
+export default withAuth(Home)

@@ -6,7 +6,7 @@ import ErrorBoundray from '../ErrorBoundray'
 import AuthProvider from '../../context/auth.context'
 
 type TProps = {
-  children: ReactNode[]
+  children: ReactNode[] | ReactNode
 }
 
 const App = (props: TProps) => {
