@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
 
-import Nav from 'src/components/Nav'
 import {
   Container,
   Main,
@@ -40,8 +39,6 @@ const Home = () => {
         <title>Sunken.me</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Nav />
 
       <Main>
         <div className="top">

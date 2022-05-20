@@ -4,6 +4,7 @@
 import React, { ReactNode } from 'react'
 import ErrorBoundray from '../ErrorBoundray'
 import AuthProvider from '../../context/auth.context'
+import Layout from '../../components/Layout'
 
 type TProps = {
   children: ReactNode[] | ReactNode
@@ -21,7 +22,9 @@ const App = (props: TProps) => {
 
   return (
     <AuthProvider>
-      <ErrorBoundray>{children}</ErrorBoundray>
+      <ErrorBoundray>
+        <Layout>{children}</Layout>
+      </ErrorBoundray>
     </AuthProvider>
   )
 }
