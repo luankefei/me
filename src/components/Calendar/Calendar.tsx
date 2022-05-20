@@ -312,8 +312,6 @@ const Calendar = () => {
     ]
     layerHelper.layers.texts = [...dates, ...schedules, ...diet]
     layerHelper.render(ctx)
-
-    // 渲染课表
   }, [])
 
   return (

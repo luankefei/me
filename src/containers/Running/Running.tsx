@@ -70,7 +70,6 @@ const Running = () => {
       </Head>
       <Container>
         <Summary>{renderSummary()}</Summary>
-        <div>bottom, calendar layout section</div>
         <Calendar />
       </Container>
     </div>
