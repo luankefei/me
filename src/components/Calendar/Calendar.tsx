@@ -8,10 +8,12 @@ declare let $: any
 const CALENDAR_HEADER_HEIGHT = 50
 const DEFAULT_BORDER_COLOR = '#dcdee0'
 const DEFAULT_BOX_WIDTH = 1400
-const DEFAULT_BOX_HEIGHT = 900
+const DEFAULT_BOX_HEIGHT = 1070
 const CALENDAR_MAIN_HEIGHT = DEFAULT_BOX_HEIGHT - CALENDAR_HEADER_HEIGHT
 const DATE_BOX_HEIGHT = 30 // 日期栏高度
 const SCHEDULE_BOX_HEIGHT = 60 // 课表栏高度
+const COL_LIMIT = 7 // 每周7天
+const ROW_LIMIT = 6 // 每月最多6周
 
 // start x & start y
 const createBoxLine = (x, y, w?, h?) => {
@@ -56,10 +58,11 @@ const createBoxLine = (x, y, w?, h?) => {
   ]
 }
 
-const initCanvas = (id: string) => {
-  const node = document.getElementById(id)
-  const w = screen.availWidth || screen.width
-  const h = screen.availHeight || screen.height
+const initCanvas = (id: string, width: number, height: number) => {
+  const node = document.getElementById(id) as HTMLCanvasElement
+
+  const w = width || screen.availWidth || screen.width
+  const h = height || screen.availHeight || screen.height
   const dpr = window.devicePixelRatio
 
   node.style.width = `${w}px`
@@ -76,7 +79,7 @@ const initCanvas = (id: string) => {
   }
 }
 
-// 生成横竖 5 * 7 的绘图数据
+// 生成横竖 6 * 7 的绘图数据
 const generateCalendarLines = (
   x: number,
   y: number,
@@ -143,10 +146,10 @@ function generateCalendarRowTexts(
 
 // 将日历数组按行（周）切割
 const sliceDayList = (list: any[] = []) => {
-  const loopCount = Math.ceil(list.length / 7)
+  const loopCount = Math.ceil(list.length / COL_LIMIT)
   let newlist = list
   for (let i = 0; i < loopCount; i += 1) {
-    newlist.push(newlist.slice(i * 7, i * 7 + 7))
+    newlist.push(newlist.slice(i * COL_LIMIT, i * COL_LIMIT + COL_LIMIT))
   }
 
   newlist = newlist.slice(newlist.length - loopCount)
@@ -175,7 +178,7 @@ const markupDates = (dates) => {
     // console.log('outState', outState, monthStartIndex, monthEndIndex)
     return {
       ...item,
-      color: outState ? 'red' : item.color
+      color: outState ? '#ccc' : item.color
     }
   })
 }
@@ -188,7 +191,7 @@ const generateScheduleTexts = () => {
     DATE_BOX_HEIGHT,
     DEFAULT_BOX_WIDTH,
     SCHEDULE_BOX_HEIGHT,
-    7,
+    COL_LIMIT,
     ['1111', '2222', '3333']
   )
 }
@@ -197,7 +200,11 @@ const Calendar = () => {
   useEffect(() => {
     // step 1: 初始化画布
 
-    const { context: ctx, layerHelper } = initCanvas('running-canvas')
+    const { context: ctx, layerHelper } = initCanvas(
+      'running-canvas',
+      screen.availWidth,
+      1200
+    )
 
     // step 2: 绘制表头、边框、日历表格、日期
     const headerContents = ['一', '二', '三', '四', '五', '六', '日']
@@ -207,7 +214,7 @@ const Calendar = () => {
       0,
       DEFAULT_BOX_WIDTH,
       CALENDAR_HEADER_HEIGHT,
-      7,
+      COL_LIMIT,
       headerContents
     )
     const grids = generateCalendarLines(
@@ -215,28 +222,28 @@ const Calendar = () => {
       0,
       DEFAULT_BOX_WIDTH,
       CALENDAR_MAIN_HEIGHT,
-      7,
-      5
+      COL_LIMIT,
+      ROW_LIMIT
     )
-    const dateGrids = new Array(5)
+    const dateGrids = new Array(ROW_LIMIT)
       .fill(null)
       .map((_, i) =>
         generateCalendarLines(
           0,
-          DATE_BOX_HEIGHT + (CALENDAR_MAIN_HEIGHT / 5) * i,
+          DATE_BOX_HEIGHT + (CALENDAR_MAIN_HEIGHT / ROW_LIMIT) * i,
           DEFAULT_BOX_WIDTH,
           SCHEDULE_BOX_HEIGHT,
           1,
           1
         )
       )
-    const scheduleGrids = new Array(5)
+    const scheduleGrids = new Array(ROW_LIMIT)
       .fill(null)
       .map((_, i) =>
         generateCalendarLines(
           0,
           DATE_BOX_HEIGHT +
-            (CALENDAR_MAIN_HEIGHT / 5) * i +
+            (CALENDAR_MAIN_HEIGHT / ROW_LIMIT) * i +
             SCHEDULE_BOX_HEIGHT,
           DEFAULT_BOX_WIDTH,
           DATE_BOX_HEIGHT,
@@ -259,10 +266,10 @@ const Calendar = () => {
     let dates = monthDayList.map((w, i) =>
       generateCalendarRowTexts(
         0,
-        Math.floor(CALENDAR_MAIN_HEIGHT / 5) * i,
+        Math.floor(CALENDAR_MAIN_HEIGHT / ROW_LIMIT) * i,
         DEFAULT_BOX_WIDTH,
         DATE_BOX_HEIGHT,
-        7,
+        COL_LIMIT,
         w.map((item) => item.day.toString()),
         DATE_BOX_HEIGHT
       )
