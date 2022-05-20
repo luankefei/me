@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
-import ActiveLink from '../../components/ActiveLink'
 
-import { Container, Main, Header, Footer, Nav, Logo, Slogan, Carousel, RecommendAside, Waterfall } from './home.style'
+import Nav from 'src/components/Nav'
+import {
+  Container,
+  Main,
+  Footer,
+  Carousel,
+  RecommendAside,
+  Waterfall
+} from './home.style'
 
 const Home = () => {
   const [screenWidth, setScreenWidth] = useState(0)
@@ -21,7 +28,9 @@ const Home = () => {
     const rowLimit = Math.floor((screenWidth - padding) / sliceWidth)
 
     return rowLimit > 0
-      ? new Array(rowLimit).fill(null).map((_, index) => <Waterfall key={`waterfall_${index}`} />)
+      ? new Array(rowLimit)
+          .fill(null)
+          .map((_, index) => <Waterfall key={`waterfall_${index}`} />)
       : []
   }
 
@@ -32,38 +41,7 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header>
-        <div>
-          <Logo>
-            <img src="/static/images/logo.png" alt="sunken.me" />
-          </Logo>
-          <Slogan>想法、层次、评论、戏剧性、流言</Slogan>
-        </div>
-        <Nav>
-          <ul>
-            <li>
-              <ActiveLink href="/" activeClassName="active">
-                <span>首页</span>
-              </ActiveLink>
-            </li>
-            <li>
-              <ActiveLink href="/recipe" activeClassName="active">
-                <span>菜谱</span>
-              </ActiveLink>
-            </li>
-            <li>
-              <ActiveLink href="/comment" activeClassName="active">
-                <span>点评</span>
-              </ActiveLink>
-            </li>
-            <li>
-              <ActiveLink href="/running" activeClassName="active">
-                <span>跑步</span>
-              </ActiveLink>
-            </li>
-          </ul>
-        </Nav>
-      </Header>
+      <Nav />
 
       <Main>
         <div className="top">

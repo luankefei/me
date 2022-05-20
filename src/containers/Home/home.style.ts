@@ -3,66 +3,9 @@ import styled from '@emotion/styled'
 export const Container = styled.div`
   min-height: 100vh;
   padding: 0;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
-`
-
-export const Header = styled.header`
-  width: 100%;
-
-  > nav {
-    height: 40px;
-    line-height: 40px;
-  }
-`
-
-export const Nav = styled.nav`
-  min-width: 600px;
-  height: 40px;
-  border-top: 1px solid #dcdee0;
-  border-bottom: 1px solid #dcdee0;
-  line-height: 30px;
-
-  ul {
-    display: flex;
-  }
-
-  ul li {
-    display: inline-block;
-    list-style: none;
-    padding: 0 30px;
-    cursor: pointer;
-
-    > a {
-      color: #53585f;
-      text-decoration: none;
-    }
-
-    .active {
-      color: #ed4441;
-    }
-  }
-`
-
-export const Logo = styled.div`
-  padding: 50px 30px 30px;
-`
-
-export const Slogan = styled.div`
-  margin: 0 30px 40px;
-  color: #53585f;
 `
 
 export const Main = styled.div`
-  // padding: 5rem 0;
-  // flex: 1;
-  // display: flex;
-  // flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
-
   > .top {
     display: flex;
     justify-content: space-between;
