@@ -18,5 +18,8 @@
     "react/no-array-index-key": "off",
     "no-plusplus": [2, { "allowForLoopAfterthoughts": true }],
     "no-restricted-syntax": ["error"]
+  },
+  "globals": {
+    "screen": true
   }
 }

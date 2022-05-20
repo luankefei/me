@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import { useEffect } from 'react'
 import { getDayList } from '../../utils/date'
 
@@ -55,8 +56,18 @@ const createBoxLine = (x, y, w?, h?) => {
   ]
 }
 
-const initCanvas = () => {
-  const { context }: { context: CanvasRenderingContext2D } = new $.Flowings()
+const initCanvas = (id: string) => {
+  const node = document.getElementById(id)
+  const w = screen.availWidth || screen.width
+  const h = screen.availHeight || screen.height
+  const dpr = window.devicePixelRatio
+
+  node.style.width = `${w}px`
+  node.style.height = `${h}px`
+  node.width = w * dpr
+  node.height = h * dpr
+
+  const { context }: { context: CanvasRenderingContext2D } = new $.Flowings(id)
   const layerHelper = new $.LayerHelper()
 
   return {
@@ -66,7 +77,14 @@ const initCanvas = () => {
 }
 
 // 生成横竖 5 * 7 的绘图数据
-const generateCalendarLines = (x: number, y: number, w: number, h: number, col: number, row: number) => {
+const generateCalendarLines = (
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  col: number,
+  row: number
+) => {
   const lines = []
 
   // cols
@@ -144,7 +162,9 @@ const sliceDayList = (list: any[] = []) => {
  */
 const markupDates = (dates) => {
   const monthStartIndex = dates.findIndex((item) => item.content === '1')
-  let monthEndIndex = dates.findIndex((item, index) => item.content === '1' && index > 27)
+  let monthEndIndex = dates.findIndex(
+    (item, index) => item.content === '1' && index > 27
+  )
 
   // 进行一次纠正
   if (monthEndIndex === -1) monthEndIndex = Infinity
@@ -163,23 +183,41 @@ const markupDates = (dates) => {
 // 生成课表文字
 const generateScheduleTexts = () => {
   console.log('generateScheduleTexts')
-  return generateCalendarRowTexts(0, DATE_BOX_HEIGHT, DEFAULT_BOX_WIDTH, SCHEDULE_BOX_HEIGHT, 7, [
-    '1111',
-    '2222',
-    '3333'
-  ])
+  return generateCalendarRowTexts(
+    0,
+    DATE_BOX_HEIGHT,
+    DEFAULT_BOX_WIDTH,
+    SCHEDULE_BOX_HEIGHT,
+    7,
+    ['1111', '2222', '3333']
+  )
 }
 
 const Calendar = () => {
   useEffect(() => {
     // step 1: 初始化画布
-    const { context: ctx, layerHelper } = initCanvas()
+
+    const { context: ctx, layerHelper } = initCanvas('running-canvas')
 
     // step 2: 绘制表头、边框、日历表格、日期
     const headerContents = ['一', '二', '三', '四', '五', '六', '日']
     const borders = createBoxLine(0, 0)
-    const headers = generateCalendarRowTexts(0, 0, DEFAULT_BOX_WIDTH, CALENDAR_HEADER_HEIGHT, 7, headerContents)
-    const grids = generateCalendarLines(0, 0, DEFAULT_BOX_WIDTH, CALENDAR_MAIN_HEIGHT, 7, 5)
+    const headers = generateCalendarRowTexts(
+      0,
+      0,
+      DEFAULT_BOX_WIDTH,
+      CALENDAR_HEADER_HEIGHT,
+      7,
+      headerContents
+    )
+    const grids = generateCalendarLines(
+      0,
+      0,
+      DEFAULT_BOX_WIDTH,
+      CALENDAR_MAIN_HEIGHT,
+      7,
+      5
+    )
     const dateGrids = new Array(5)
       .fill(null)
       .map((_, i) =>
@@ -197,7 +235,9 @@ const Calendar = () => {
       .map((_, i) =>
         generateCalendarLines(
           0,
-          DATE_BOX_HEIGHT + (CALENDAR_MAIN_HEIGHT / 5) * i + SCHEDULE_BOX_HEIGHT,
+          DATE_BOX_HEIGHT +
+            (CALENDAR_MAIN_HEIGHT / 5) * i +
+            SCHEDULE_BOX_HEIGHT,
           DEFAULT_BOX_WIDTH,
           DATE_BOX_HEIGHT,
           1,
@@ -235,14 +275,22 @@ const Calendar = () => {
     // TODO: 这里暂时，不绘制背景和折行
     const schedules = generateScheduleTexts()
 
-    layerHelper.layers.lines = [...grids, ...scheduleGrids.flat(Infinity), ...dateGrids.flat(Infinity)]
+    layerHelper.layers.lines = [
+      ...grids,
+      ...scheduleGrids.flat(Infinity),
+      ...dateGrids.flat(Infinity)
+    ]
     layerHelper.layers.texts = [...dates, ...schedules]
     layerHelper.render(ctx)
 
     // 渲染课表
   }, [])
 
-  return <div />
+  return (
+    <div>
+      <canvas id="running-canvas" />
+    </div>
+  )
 }
 
 export default Calendar
